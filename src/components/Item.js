@@ -1,8 +1,10 @@
 import React, {} from "react";
 
 function Item(props) {
+    console.log(props);
     return (
-        // TODO: Add a span. element to display each item's value
+       
+        <h1>{props.value.value}</h1>
     );
 }
 

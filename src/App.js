@@ -1,51 +1,68 @@
 import React, { useState } from "react";
 import "./App.css";
-// TODO: import the Item component
-// TODO: import the Header component
+import Item from "./components/Item";
+import Header from "./components/Header";
 
 function App() {
   // State Hook - `useState`
-  const [newItem, setNewItem] = useState("");
+  const initialvalue = {id:0, value:""};
+  const [newItem, setNewItem] = useState(initialvalue);
   const [items, setItems] = useState([]);
 
 
-  // Helper Functions
-
-  /* TODO: Complete this method to add an item to the items array
-          i.  item should be an object with this structure:
-            {id: generate_a_random_number, value: newItem}
-          ii. Make use of the setItems and setNewItems state methods.
-          iii. Clue: you can use "Math.floor(Math.random() * 100)" to generate a random number.
-  */
-
+  
+  // using the previous Snapshot data to add new data in it.
   function addItem() {
-   
+    setItems((previtems)=>{
+      return [...previtems, newItem]
+    })
+    setNewItem(initialvalue);
   }
 
-  /* TODO: Complete this method to delete an item(with id) from the items array */
+  // using the previous snap shot data to filter the existing data
   function deleteItem(id) {
+    setItems((previtems)=>{
+        const filteredlist = previtems.filter(data => data.id != id)
+        return filteredlist;
+    })
   }
 
-
-  // Main part of app
+  const datacollector = (e) => {
+    setNewItem({
+      id:Math.floor(Math.random() * 100),
+      value: (e.target.value),
+    });
+  }
+  
   return (
     <div className="app">
-      {/* TODO: Add the Header component */}
+     
+      <Header></Header>
 
       <input
         type="text"
         placeholder="Add an item..."
-        value={newItem}
-        // onChange={}  TODO: complete the onChange to call the setNewItem hook. 
+        value={newItem.value}
+         onChange={datacollector}  
       />
 
-      {/* TODO: Add a button with onClick that calls the addItem() */}
+      <button onClick={addItem}>Add item</button>
 
-        {/* TODO: Iterate through the items array, for each:
-                a. Call the Item component with a property of 'item'
-                b. Add a button that deletes the item (HINT this button onClick should call deleteItem() 
-                    i. use ❌ as the content for your delete button 
-                    ii. use className="delete-button" also */}
+        
+        {items.map((item,index) => {
+          return(
+            <div>
+            <Item key={index}  value = {item}>
+
+          </Item>
+          <button  className="delete-button" onClick={() => deleteItem(item.id)}>❌</button>
+    
+          </div>
+          
+          
+        )})
+      }
+
     </div>
   );
 }
