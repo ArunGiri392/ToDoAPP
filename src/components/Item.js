@@ -1,10 +1,16 @@
 import React, {} from "react";
 
 function Item(props) {
-    console.log(props);
+    
+    const datasender = (id)=>{
+       props.ondelete(id);
+    }
+
     return (
        
-        <h1>{props.value.value}</h1>
+        props.value.map((data) => {
+            return <h1>{data.value} <button onClick={()=>datasender(data.id)}>❌</button></h1>
+        })
     );
 }
 

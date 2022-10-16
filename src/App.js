@@ -49,20 +49,10 @@ function App() {
       <button onClick={addItem}>Add item</button>
 
         
-        {items.map((item,index) => {
-          return(
-            <div>
-            <Item key={index}  value = {item}>
-
-          </Item>
-          <button  className="delete-button" onClick={() => deleteItem(item.id)}>❌</button>
-    
-          </div>
+      <Item value = {items} ondelete={deleteItem}></Item>
           
           
-        )})
-      }
-
+       
     </div>
   );
 }
